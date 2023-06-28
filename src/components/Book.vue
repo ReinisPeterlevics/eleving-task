@@ -5,7 +5,7 @@
       <div class="link">Explore</div>
     </div>
     <BookDetails :book="book[0]" />
-    <Review v-show="!isReviewed" @add-review="addReview" />
+    <Review v-show="!isReviewed && book.length!=0" @add-review="addReview" />
     <div v-show="isReviewed" class="reviewed">
       <div class="caption-bold">Thank you! Review received.</div>
     </div>
