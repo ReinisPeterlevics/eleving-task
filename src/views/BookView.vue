@@ -1,14 +1,14 @@
 <template>
-  <Home />
+  <Book />
 </template>
 
 <script>
-import Home from "../components/Home.vue"
+import Book from "../components/Book.vue"
 
 export default {
-  name: "HomeView",
+  name: "BookView",
   components: {
-    Home,
+    Book,
   },
 }
 </script>
