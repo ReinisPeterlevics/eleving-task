@@ -52,6 +52,7 @@ export default {
   align-items: flex-start;
   gap: 14px;
   flex: 1 0 0;
+  flex-wrap: wrap;
 }
 
 .book-cover {

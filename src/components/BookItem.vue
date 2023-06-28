@@ -37,6 +37,7 @@ export default {
   border-radius: 4px;
   -webkit-transition: 0.3s;
   transition: 0.3s;
+  flex-wrap: wrap;
 }
 
 .book-list-item:hover {
