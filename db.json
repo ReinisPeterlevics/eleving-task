@@ -218,6 +218,12 @@
       "text": "Made me proud",
       "bookid": 3,
       "id": 5
+    },
+    {
+      "rating": 1,
+      "text": "Miserabel",
+      "bookid": 12,
+      "id": 6
     }
   ]
 }
