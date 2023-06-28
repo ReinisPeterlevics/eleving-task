@@ -6,6 +6,9 @@
         <BookItem :book="book" :filter="filter" />
       </div>
     </div>
+    <div v-show="hasError" class="error">
+      <div class="caption-bold">Something went wrong. Please try again later.</div>
+    </div>
   </div>
 </template>
 
@@ -23,13 +26,25 @@ export default {
   data() {
     return {
       books: [],
+      hasError: false,
     }
   },
   methods: {
     async fetchBooks() {
-      const res = await fetch("api/books");
-      const data = await res.json();
-      return data;
+      let response;
+      try {
+        response = await fetch("api/books");
+      } catch (error) {
+        this.hasError = true;
+        return [];
+      }
+      if (response?.ok) {
+        const data = await response.json();
+        return data;
+      } else {
+        this.hasError = true;
+        return [];
+      }
     },
   },
   computed: {
@@ -65,5 +80,15 @@ export default {
   flex-direction: column;
   align-items: flex-start;
   gap: 16px;
+}
+
+.error {
+  display: flex;
+  padding: 10px;
+  align-items: flex-start;
+  gap: 10px;
+  border-radius: 4px;
+  background: var(--ui-error, #C71B1B);
+  color: #FFF;
 }
 </style>

@@ -5,7 +5,7 @@
       <div class="link">Explore</div>
     </div>
     <BookDetails :book="book[0]" />
-    <Review v-show="!isReviewed && book.length!=0" @add-review="addReview" />
+    <Review v-show="!isReviewed && book.length != 0" @add-review="addReview" />
     <div v-show="isReviewed" class="reviewed">
       <div class="caption-bold">Thank you! Review received.</div>
     </div>
@@ -37,21 +37,40 @@ export default {
       this.$router.push({ name: 'home', query: { filter: this.$route.query.filter } });
     },
     async fetchBook(id) {
-      const res = await fetch("api/books?id=" + id);
-      const data = await res.json();
-      return data;
+      let response;
+      try {
+        response = await fetch("api/books?id=" + id);
+      } catch (error) {
+        this.hasError = true;
+        return [];
+      }
+      if (response?.ok) {
+        const data = await response.json();
+        return data;
+      } else {
+        this.hasError = true;
+        return [];
+      }
     },
     async addReview(review) {
       review.bookid = this.book[0].id;
-      const response = await fetch('api/reviews', {
-        method: 'POST',
-        headers: {
-          'Content-type': 'application/json',
-        },
-        body: JSON.stringify(review),
-      })
-      this.hasError = !response.ok;
-      this.isReviewed = response.ok;
+      let response;
+      try {
+        response = await fetch('api/reviews', {
+          method: 'POST',
+          headers: {
+            'Content-type': 'application/json',
+          },
+          body: JSON.stringify(review),
+        })
+      } catch (error) {
+        this.hasError = true;
+      }
+      if (response?.ok) {
+        this.isReviewed = true;
+      } else {
+        this.hasError = true;
+      }
     },
   },
   async created() {
